@@ -25,8 +25,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     password: encryptedPassword
                 }
             })
+            const { password: newPassword, ...objWithoutPw } = newUser;
 
-            res.status(201).json({ user: newUser, message: "User successfully created" })
+            res.status(201).json({ user: objWithoutPw, message: "User successfully created" })
         } catch (err) {
             res.status(500).json({ error: 'failed to fetch data' })
         }
