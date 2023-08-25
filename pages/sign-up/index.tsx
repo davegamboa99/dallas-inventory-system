@@ -21,6 +21,7 @@ const FormSchema = z.object({
     username: z.string().min(2, {
         message: "Username must be at least 2 characters.",
     }),
+    name: z.string(),
     password: z.string(),
     confirmPass: z.string()
 })
@@ -59,6 +60,19 @@ export default function Signup() {
                             <FormLabel>Username</FormLabel>
                             <FormControl>
                                 <Input placeholder="Enter username" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Enter your name" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
