@@ -1,13 +1,23 @@
 import { prisma } from '@/lib/prisma';
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next';
 import { hash } from 'bcrypt';
+import * as z from 'zod';
+
+const UserSchema = z.object({
+    username: z.string().min(5, {
+        message: "Username must be at least 5 characters.",
+    }),
+    name: z.string(),
+    password: z.string(),
+})
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (req.method === 'POST') {
         // Process a POST request
         try {
-            const { username, name, password } = req.body;
+            const { username, name, password } = UserSchema.parse(req.body);
 
             const usernameExist = await prisma.user.findUnique({
                 where: { username: username }
